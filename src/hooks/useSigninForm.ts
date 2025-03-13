@@ -20,13 +20,13 @@ export function useSignInForm() {
         email: email || "",
         password: password || "",
         redirect: true,
-        callbackUrl:'/dashboard'
+        callbackUrl: "/dashboard",
       });
-      if (result?.error) {
+      if (!result?.error) {
+        router.push("/dashboard");
+      } else {
         setError(result?.error || "");
         toast.error(result?.error);
-      } else {
-        router.push("/dashboard");
       }
     } catch (error: unknown) {
       setError((error as string) || "An error occurred");

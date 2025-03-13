@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  let authToken;
   const path = request.nextUrl.pathname;
-  const authToken = request.cookies.get("next-auth.session-token");
+  authToken = request.cookies.get("next-auth.session-token");
+  if (!authToken) {
+    authToken = request.cookies.get("__Secure-next-auth.session-token");
+  }
+
   const isPublicPath = ["/", "/signin", "/signup", "/password/forget"].includes(
     path
   );
